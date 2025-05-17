@@ -4,17 +4,16 @@ import bcrypt from "bcrypt"
 
 
 export const register=async(req,res,next)=>{
-    const { username, password,email }=req.body
-    if(!username||password||email){
-        return next(new CustomError("all are required field",400))
-    }
+    const { name, password,email }=req.body
+    
     const bycripted =await bcrypt.hash(password,4)
 
     const newUser=new User({
-        username:username,
+        username:name,
         password:bycripted,
         email:email
     })
+    await newUser.save()
 
     if(!newUser){
         return next(new CustomError("user registration faild",400))
@@ -30,7 +29,12 @@ export const register=async(req,res,next)=>{
 
 export const login=async(req,res,next)=>{
     const {email,password}=req.body
-    const user=await User.findOne({email})
+    console.log(email);
+    console.log(password);
+    
+    
+    const user=await User.find({email:email})
+    
     if(!user){
         return next(new CustomError("Invalid Credentials",404))
     }
