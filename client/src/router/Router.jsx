@@ -3,6 +3,7 @@ import Navbar from "../components/navbar";
 import Home from "../pages/home";
 import Register from "../pages/auth/register";
 import Login from "../pages/auth/login";
+import ProductDetails from "../pages/productDetails";
 
 
 function Router() {
@@ -16,6 +17,7 @@ function Router() {
         <Route path="/" element={<Home/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/login" element={<Login />} />
+        <Route path="/detailsof/:id" element={<ProductDetails/>}/>
     </Routes>
       
     </>

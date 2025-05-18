@@ -9,3 +9,5 @@ wishlistRoute
     .get("/get/:id",tryCatch(getWishlist))
     .delete("/delete",tryCatch(removeFromWishlist))
 export default wishlistRoute
+
+

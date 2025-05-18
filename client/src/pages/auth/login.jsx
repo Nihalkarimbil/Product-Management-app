@@ -19,7 +19,10 @@ const initialvalue = {
 
 export default function Login() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
+
+    //Form Handling With Formik
     const { handleChange, handleBlur, handleSubmit, values, touched, errors, resetForm } = useFormik({
         initialValues: initialvalue,
         validationSchema: validationSchema,
@@ -33,11 +36,7 @@ export default function Login() {
         }
     })
 
-    const navigate = useNavigate()
-
-
-
-
+    
     const handleForgotPassword = () => {
         console.log('Forgot password clicked');
     };
@@ -126,7 +125,7 @@ export default function Login() {
                     </p>
 
                     <button
-                        onClick={() => navigate("/login")}
+                        onClick={() => navigate("/register")}
                         className="border-2 border-white text-white hover:bg-white hover:text-blue-900 font-semibold px-12 py-3 rounded-full transition-colors"
                     >
                         SIGN UP

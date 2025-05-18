@@ -21,7 +21,8 @@ export const addToWishlist=async(req,res,next)=>{
 }
 
 export const getWishlist=async(req,res,next)=>{
-    const wishlist = Wishlist.find({ user: req.params.id }).populate("products")
+    
+    const wishlist = await Wishlist.find({ user: req.params.id }).populate("products")
     res.status(200).json({
         message:"wishlist of the user",
         data:wishlist,

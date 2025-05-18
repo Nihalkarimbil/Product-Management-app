@@ -20,6 +20,9 @@ const initialvalue = {
 }
 export default function Register() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    //Form Handling Using Formik
     const { values, handleChange, handleSubmit, handleBlur, errors, touched ,resetForm} = useFormik({
         initialValues: initialvalue,
         validationSchema: validationSchema,
@@ -31,7 +34,7 @@ export default function Register() {
             resetForm()
         }
     })
-    const navigate = useNavigate()
+   
 
 
 

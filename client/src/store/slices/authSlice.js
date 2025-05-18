@@ -50,16 +50,19 @@ const authSlice = createSlice({
             state.email = "";
             state.password = "";
             state.isAuthenticated = false;
+            localStorage.removeItem("user")
         },
     },
     extraReducers: (builder) => {
         builder
+            //Login
             .addCase(loginUser.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 const { name, email } = action.payload;
+                localStorage.setItem('user', JSON.stringify(action.payload.data));
                 state.name = name;
                 state.email = email;
                 state.isAuthenticated = true;
@@ -69,6 +72,7 @@ const authSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
+            //Register
             .addCase(registeruser.pending,(state)=>{
                 state.loading=true,
                 state.error=null

@@ -12,6 +12,7 @@ const productSchema = new mongoose.Schema({
     subCategory: { type: mongoose.Schema.Types.ObjectId, ref: 'subcategory', required: true },
     variants: { type: [variantSchema], required: true }, 
     images: [String],
+    price:{type:Number,default:1000},
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'user' }
 }, { timestamps: true });
 
