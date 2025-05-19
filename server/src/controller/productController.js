@@ -58,12 +58,10 @@ export const getProductbysubCategory = async (req, res, next) => {
 
 }
 
-export const editProduct = async (req, res, next) => {
-    const { id } = req.params
-    if (!id) {
-        return next(new CustomError("id is requrid", 400))
-    }
-    const updated = await Product.findByIdAndUpdate(id, req.body, { new: true });
+export const searchProduct = async (req, res, next) => {
+    const { name } = req.params
+    
+    const updated = await Product.find({name:name});
     res.json({
         data: updated,
         message: "product edited",

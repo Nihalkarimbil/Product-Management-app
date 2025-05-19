@@ -38,6 +38,25 @@ export const ProductsBySubcategory = createAsyncThunk(
     }
 );
 
+export const searchProduct= createAsyncThunk(
+    "/product/serch",
+    async (name, thunkAPI) => {
+        console.log(name);
+        
+        try {
+            const resp = await axiosInstance.get(`/product/search/${name}`);
+            console.log(resp.data);
+
+            return resp.data.data;
+        } catch (error) {
+            const message =
+                error.response?.data?.message || error.message || "Product add failed";
+            return thunkAPI.rejectWithValue(message);
+        }
+    }
+);
+
+
 
 
 const productSlice = createSlice({
@@ -78,6 +97,21 @@ const productSlice = createSlice({
                 state.error = null;
             })
             .addCase(ProductsBySubcategory.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload || "Something went wrong";
+                state.product = null;
+            })
+            .addCase(searchProduct.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+                state.product = null;
+            })
+            .addCase(searchProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                state.product = action.payload;
+                state.error = null;
+            })
+            .addCase(searchProduct.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || "Something went wrong";
                 state.product = null;

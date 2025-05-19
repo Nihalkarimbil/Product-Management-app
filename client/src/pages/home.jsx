@@ -9,9 +9,11 @@ import { Link } from 'react-router-dom';
 import CategoryModal from '../components/category';
 import SubCategoryModal from '../components/subCategorymodal';
 import { addToWishlist, getWishlist } from '../store/slices/wishlistSlice';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Home() {
+    const navigate=useNavigate()
     const { subCategory } = useSelector(state => state.subcategory)
     const { product } = useSelector(state => state.Product)  
     const { category } = useSelector(state => state.Category)
@@ -83,13 +85,18 @@ export default function Home() {
 
     const handleAddtoWishlist=async(productId)=>{
         try {
-            const dataTosend = {
-                productId: productId,
-                userId: user._id
-            }
+            if(user){
+                const dataTosend = {
+                    productId: productId,
+                    userId: user._id
+                }
 
-            await dispatch(addToWishlist(dataTosend))
-            await dispatch(getWishlist(user._id))
+                await dispatch(addToWishlist(dataTosend))
+                await dispatch(getWishlist(user._id))
+            }else{
+                navigate("/login")
+            }
+           
         } catch (error) {
             console.log(error);
             
@@ -110,13 +117,13 @@ export default function Home() {
                 </div>
 
                 <div className="flex space-x-2">
-                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-2xl" onClick={handlemoOpen}>
+                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-2xl hover:cursor-pointer" onClick={handlemoOpen}>
                         Add category
                     </button>
-                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-2xl" onClick={handlesubOpen}>
+                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-2xl hover:cursor-pointer" onClick={handlesubOpen}>
                         Add sub category
                     </button>
-                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-2xl" onClick={handleOpen}>
+                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-2xl hover:cursor-pointer" onClick={handleOpen}>
                         Add product
                     </button>
                 </div>
@@ -125,12 +132,12 @@ export default function Home() {
             <div className="flex flex-col md:flex-row gap-6">
 
                 <div className="w-full md:w-64 shrink-0">
-                    <h2 className="text-lg font-medium mb-3">Categories</h2>
+                    <h2 className="text-lg font-bold text-blue-800 mb-3">Categories</h2>
 
 
                     <ul className="space-y-2">
                         <li className="py-1">
-                            <a href="#" className="block text-gray-700 hover:text-blue-600">All categories</a>
+                            <a href="#" className="block text-gray-700 font-semibold hover:text-blue-600">All categories</a>
                         </li>
 
                         {category?.map((cat) => (
@@ -182,7 +189,7 @@ export default function Home() {
                         {product && product.length > 0 ? (
                             product.map((product) => (
                                 <div key={product._id} className=" border border-gray-100 rounded-md p-4 flex flex-col relative shadow-lg">
-                                    <button className="absolute top-4 right-4 bg-blue-50 p-1 rounded-full" onClick={()=>handleAddtoWishlist(product._id)}>
+                                    <button className="absolute top-4 right-4 bg-blue-50 p-1 rounded-full hover:cursor-pointer" onClick={()=>handleAddtoWishlist(product._id)}>
                                         <FaHeart size={18} className="text-blue-500" />
                                     </button>
 

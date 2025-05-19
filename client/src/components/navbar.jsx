@@ -5,6 +5,7 @@ import { getWishlist } from '../store/slices/wishlistSlice';
 import { IoClose } from "react-icons/io5";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { Link } from 'react-router-dom';
+import { searchProduct } from '../store/slices/ProductSlice';
 
 export default function Navbar() {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -20,11 +21,14 @@ export default function Navbar() {
         if (user && user._id) {
             Dispatch(getWishlist(user._id));
         }
-    }, [Dispatch, user._id]);
+    }, [Dispatch]);
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const toggleWishlist = () => setIsWishlistOpen(!isWishlistOpen);
-    const handleSearch = () => console.log('Searching for:', searchQuery);
+    const handleSearch = async() => {
+        await Dispatch(searchProduct(searchQuery))
+        setSearchQuery("")
+    };
 
     return (
         <>
@@ -134,14 +138,15 @@ export default function Navbar() {
                 </div>
                 <div className="overflow-y-auto h-full pb-20">
                     {items?.products?.length > 0 ? (
-                        items?.products?.map((item) => (
-                            <div key={item._id} className="p-4 border-b border-gray-200 flex items-center">
+                        items?.products?.map((item,index) => (
+                            <div key={index} className="p-4 border-b border-gray-200 flex items-center">
                                 <div className="mr-3">
                                     <img
-                                        src={item?.images[0]||"/api/img"}
+                                        src={Array.isArray(item?.images) && item.images.length > 0 ? item.images[0] : "/api/img"}
                                         alt={item.name}
                                         className="w-16 h-16 object-contain"
                                     />
+
                                 </div>
                                 <div className="flex-1">
                                     <h3 className="font-medium text-gray-800">{item.name}</h3>
