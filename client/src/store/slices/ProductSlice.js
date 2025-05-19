@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../axiosInstance";
 
+
+//ADD A NEW PRODUCT
 export const Addpro = createAsyncThunk(
     "/product/add",
     async (productData, thunkAPI) => {
@@ -20,6 +22,8 @@ export const Addpro = createAsyncThunk(
         }
     }
 );
+
+//FETCH PRODUCT BY SUB CATEGORY
 export const ProductsBySubcategory = createAsyncThunk(
     "/product/fetch",
     async (subcatId, thunkAPI) => {
@@ -38,6 +42,7 @@ export const ProductsBySubcategory = createAsyncThunk(
     }
 );
 
+//SEARCH PRODUCTS 
 export const searchProduct= createAsyncThunk(
     "/product/serch",
     async (name, thunkAPI) => {
@@ -101,6 +106,8 @@ const productSlice = createSlice({
                 state.error = action.payload || "Something went wrong";
                 state.product = null;
             })
+
+            //Search
             .addCase(searchProduct.pending, (state) => {
                 state.loading = true;
                 state.error = null;

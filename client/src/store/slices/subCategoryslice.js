@@ -16,7 +16,7 @@ export const fetchSubCategory = createAsyncThunk(
     }
 );
 
-// Toggle subcategories (e.g., by category ID)
+// Toggle subcategories 
 export const togleSubCategory = createAsyncThunk(
     "/togleSubcategory",
     async (catId, thunkAPI) => {

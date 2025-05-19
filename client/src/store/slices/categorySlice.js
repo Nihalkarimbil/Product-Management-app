@@ -7,7 +7,7 @@ export const fetchcategory = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             const res = await axiosInstance.get("/category/get");
-            return res.data.data; // should be an array
+            return res.data.data; 
         } catch (error) {
             console.error(error);
             return thunkAPI.rejectWithValue("Failed to fetch categories");
@@ -21,7 +21,7 @@ export const addCategory = createAsyncThunk(
     async (name, thunkAPI) => {
         try {
             const resp = await axiosInstance.post("/category/add", { name });
-            return resp.data; // should be a single object
+            return resp.data;
         } catch (error) {
             const message =
                 error.response?.data?.message || error.message || "Category add failed";

@@ -45,6 +45,7 @@ const wishlistSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            //ADD TO WISHLIST
             .addCase(addToWishlist.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -57,7 +58,7 @@ const wishlistSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-
+            //GET WISHLIST
             .addCase(getWishlist.pending, (state) => {
                 state.loading = true;
                 state.error = null;

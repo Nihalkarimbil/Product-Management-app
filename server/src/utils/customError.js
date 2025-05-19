@@ -1,3 +1,5 @@
+//ERROR CLASS FOR MANAGING ERRORS UNIFORMLY
+
 class CustomError extends Error {
     constructor(message, statusCode) {
         super(message)
